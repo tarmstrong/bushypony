@@ -54,35 +54,10 @@
         }
 
         #index nav > ul > li {
-            margin-bottom: 12px;
-        }
-
-        #index nav .section-title {
-            font-weight: bold;
-            cursor: pointer;
-            user-select: none;
-            display: block;
             margin-bottom: 4px;
         }
 
-        #index nav .section-title:hover {
-            color: #ff08d2;
-        }
-
-        #index nav ul ul {
-            display: none;
-            padding-left: 0;
-        }
-
-        #index nav ul ul.open {
-            display: block;
-        }
-
-        #index nav ul ul li {
-            margin-bottom: 2px;
-        }
-
-        #index nav ul ul li a {
+        #index nav ul li a {
             display: block;
             padding: 1px 0;
         }
@@ -99,13 +74,6 @@
 
         #exhibit .about-text p {
             margin-bottom: 12px;
-        }
-
-        #exhibit .banner-img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin-bottom: 20px;
         }
 
         #exhibit .contact-info {
@@ -138,62 +106,45 @@
         <h1>Bushy Pony</h1>
         <nav>
             <ul>
-                <li>
-                    <span class="section-title">About</span>
-                    <ul class="open">
-                        <li><a href="#about" class="nav-link" data-section="about">Figurative Art Berlin</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <span class="section-title">Exhibitions</span>
-                    <ul>
-                        <li><a href="#show-your-face" class="nav-link" data-section="show-your-face">Show Your Face In Berlin</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <span class="section-title">Links</span>
-                    <ul>
-                        <li><a href="https://instagram.com/bushypony" target="_blank">Instagram</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <span class="section-title">Contact</span>
-                    <ul>
-                        <li><a href="https://instagram.com/bushypony" target="_blank">@bushypony</a></li>
-                    </ul>
-                </li>
+                <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+                <li><a href="#current-exhibition" class="nav-link" data-section="current-exhibition">Current Exhibition</a></li>
+                <li><a href="#past-exhibitions" class="nav-link" data-section="past-exhibitions">Past Exhibitions</a></li>
+                <li><a href="https://instagram.com/bushypony" target="_blank">Instagram</a></li>
+                <li><a href="#impressum" class="nav-link" data-section="impressum">Impressum</a></li>
             </ul>
         </nav>
     </div>
 
     <div id="exhibit">
         <div id="section-about" class="content-section">
-            <img src="banner.jpg" alt="Bushy Pony" class="banner-img">
             <div class="about-text">
                 <p>Bushy Pony is Berlin's artist-run home for contemporary figurative art. Our debut exhibition brings together intimate, human-scale works—paintings alongside a video installation—celebrating narrative image-making and lived bodies.</p>
             </div>
         </div>
 
-        <div id="section-show-your-face" class="content-section" style="display:none;">
+        <div id="section-current-exhibition" class="content-section" style="display:none;">
             <div class="about-text">
                 <p>Show Your Face In Berlin: Self Portrait Competition</p>
                 <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSfyaI9wIfvQ2b3zL6pYnWFMgimG7J3TWEn5YfcmD3HzWfDn4g/viewform?usp=dialog" target="_blank">Submit your work</a></p>
             </div>
         </div>
+
+        <div id="section-past-exhibitions" class="content-section" style="display:none;">
+            <div class="about-text">
+                <p>Coming soon.</p>
+            </div>
+        </div>
+
+        <div id="section-impressum" class="content-section" style="display:none;">
+            <div class="about-text">
+                <p>Bushy Pony</p>
+                <p>Berlin, Germany</p>
+                <p><a href="https://instagram.com/bushypony" target="_blank">@bushypony</a></p>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Toggle sections open/closed
-        document.querySelectorAll('.section-title').forEach(function(title) {
-            title.addEventListener('click', function() {
-                var submenu = this.nextElementSibling;
-                if (submenu) {
-                    submenu.classList.toggle('open');
-                }
-            });
-        });
-
-        // Navigate between content sections
         document.querySelectorAll('.nav-link').forEach(function(link) {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -204,11 +155,6 @@
                 var target = document.getElementById(sectionId);
                 if (target) {
                     target.style.display = 'block';
-                }
-                // Open the parent submenu
-                var parentUl = this.closest('ul');
-                if (parentUl) {
-                    parentUl.classList.add('open');
                 }
             });
         });

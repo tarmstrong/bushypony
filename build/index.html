@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bushy Pony — About</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, Verdana, sans-serif;
+            font-size: 12px;
+            line-height: 16px;
+            color: #000;
+            background: #fff;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        a:hover {
+            color: #ff08d2;
+        }
+
+        #index {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 240px;
+            height: 100%;
+            padding: 60px 0 40px 40px;
+            overflow-y: auto;
+        }
+
+        #index h1 {
+            font-size: 12px;
+            font-weight: bold;
+            line-height: 16px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #index nav ul {
+            list-style: none;
+            margin-bottom: 8px;
+        }
+
+        #index nav > ul > li {
+            margin-bottom: 4px;
+        }
+
+        #index nav ul li a {
+            display: block;
+            padding: 1px 0;
+        }
+
+        #exhibit {
+            margin-left: 240px;
+            padding: 60px 40px 40px 40px;
+        }
+
+        #exhibit .about-text {
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+
+        #exhibit .about-text p {
+            margin-bottom: 12px;
+        }
+
+        #exhibit .about-text h2 {
+            font-size: 12px;
+            font-weight: bold;
+            line-height: 16px;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        #exhibit .contact-info {
+            margin-top: 12px;
+        }
+
+        #exhibit .contact-info p {
+            margin-bottom: 4px;
+        }
+
+        /* Mobile */
+        @media (max-width: 700px) {
+            #index {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 30px 20px 20px 20px;
+            }
+
+            #exhibit {
+                margin-left: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="index">
+        <h1>Bushy Pony</h1>
+        <nav>
+            <ul>
+                <li><strong><a href="index.html">About</a></strong></li>
+                <li><a href="current-exhibition.html">Current Exhibition</a></li>
+                <li><a href="past-exhibitions.html">Past Exhibitions</a></li>
+                <li><a href="https://instagram.com/bushypony" target="_blank">Instagram</a></li>
+                <li><a href="impressum.html">Impressum</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="exhibit">
+<div class="about-text">
+    <p>Bushy Pony is Berlin's artist-run home for contemporary figurative art. Our debut exhibition brings together intimate, human-scale works—paintings alongside a video installation—celebrating narrative image-making and lived bodies.</p>
+</div>
+
+    </div>
+
+</body>
+</html>

@@ -22,7 +22,16 @@ def write(path, content):
         f.write(content)
 
 
-def build_nav(nav_items, current_page):
+def load_subpages(page):
+    """Load subpages config for a page if it exists."""
+    config = os.path.join(ROOT, f"{page}.json")
+    if os.path.isfile(config):
+        return json.loads(read(config))
+    return None
+
+
+def build_nav(nav_items, current_page, depth=0):
+    prefix = "../" * depth
     lines = []
     for item in nav_items:
         if "url" in item:
@@ -31,15 +40,34 @@ def build_nav(nav_items, current_page):
             )
         else:
             page = item["page"]
-            href = "index.html" if page == nav_items[0]["page"] else f"{page}.html"
-            if page == current_page:
-                lines.append(
-                    f'                <li><strong><a href="{href}">{item["title"]}</a></strong></li>'
-                )
+            subpages = load_subpages(page)
+
+            if subpages:
+                # Parent label (not a link) with nested sub-items
+                lines.append(f'                <li>{item["title"]}')
+                lines.append(f'                    <ul>')
+                for sub in subpages:
+                    href = f"{prefix}{page}/{sub['slug']}.html"
+                    if current_page == f"{page}/{sub['slug']}":
+                        lines.append(
+                            f'                        <li><strong><a href="{href}">{sub["title"]}</a></strong></li>'
+                        )
+                    else:
+                        lines.append(
+                            f'                        <li><a href="{href}">{sub["title"]}</a></li>'
+                        )
+                lines.append(f'                    </ul>')
+                lines.append(f'                </li>')
             else:
-                lines.append(
-                    f'                <li><a href="{href}">{item["title"]}</a></li>'
-                )
+                href = f"{prefix}index.html" if page == nav_items[0]["page"] else f"{prefix}{page}.html"
+                if page == current_page:
+                    lines.append(
+                        f'                <li><strong><a href="{href}">{item["title"]}</a></strong></li>'
+                    )
+                else:
+                    lines.append(
+                        f'                <li><a href="{href}">{item["title"]}</a></li>'
+                    )
     return "\n".join(lines)
 
 
@@ -62,19 +90,35 @@ def main():
         if first_page is None:
             first_page = page
 
-        content = read(os.path.join(PAGES, f"{page}.html"))
-        nav_html = build_nav(nav_items, page)
-        title = f"Bushy Pony — {item['title']}"
+        subpages = load_subpages(page)
 
-        html = layout.replace("{{nav}}", nav_html)
-        html = html.replace("{{content}}", content)
-        html = html.replace("{{title}}", title)
+        if subpages:
+            # Generate each subpage only (no listing page)
+            for sub in subpages:
+                sub_key = f"{page}/{sub['slug']}"
+                sub_content = read(os.path.join(PAGES, page, f"{sub['slug']}.html"))
+                sub_nav = build_nav(nav_items, sub_key, depth=1)
+                sub_title = f"Bushy Pony — {sub['title']}"
 
-        write(os.path.join(BUILD, f"{page}.html"), html)
+                sub_html = layout.replace("{{nav}}", sub_nav)
+                sub_html = sub_html.replace("{{content}}", sub_content)
+                sub_html = sub_html.replace("{{title}}", sub_title)
 
-        # First page is also index.html
-        if page == first_page:
-            write(os.path.join(BUILD, "index.html"), html)
+                write(os.path.join(BUILD, page, f"{sub['slug']}.html"), sub_html)
+        else:
+            content = read(os.path.join(PAGES, f"{page}.html"))
+            nav_html = build_nav(nav_items, page)
+            title = f"Bushy Pony — {item['title']}"
+
+            html = layout.replace("{{nav}}", nav_html)
+            html = html.replace("{{content}}", content)
+            html = html.replace("{{title}}", title)
+
+            write(os.path.join(BUILD, f"{page}.html"), html)
+
+            # First page is also index.html
+            if page == first_page:
+                write(os.path.join(BUILD, "index.html"), html)
 
     # Copy static assets
     if os.path.isdir(STATIC):
@@ -91,7 +135,7 @@ def main():
     if os.path.isfile(cname):
         shutil.copy2(cname, os.path.join(BUILD, "CNAME"))
 
-    print(f"Built {len(os.listdir(BUILD))} files in docs/")
+    print("Built docs/")
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ import os
 import shutil
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-BUILD = os.path.join(ROOT, "build")
+BUILD = os.path.join(ROOT, "docs")
 PAGES = os.path.join(ROOT, "pages")
 STATIC = os.path.join(ROOT, "static")
 
@@ -91,7 +91,7 @@ def main():
     if os.path.isfile(cname):
         shutil.copy2(cname, os.path.join(BUILD, "CNAME"))
 
-    print(f"Built {len(os.listdir(BUILD))} files in build/")
+    print(f"Built {len(os.listdir(BUILD))} files in docs/")
 
 
 if __name__ == "__main__":
